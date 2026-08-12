@@ -1,0 +1,10 @@
+{
+  "name": "Cowart.FlowFramework.Editor",
+  "rootNamespace": "Cowart.FlowFramework.Editor",
+  "references": [
+    "Cowart.FlowFramework"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}
