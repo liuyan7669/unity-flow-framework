@@ -34,7 +34,7 @@ com.cowart.flow-framework
 ### 通过 Git URL 安装
 
 ```text
-https://github.com/liuyan7669/unity-flow-framework.git#1.0.1
+https://github.com/liuyan7669/unity-flow-framework.git#1.0.2
 ```
 
 ## 快速开始
