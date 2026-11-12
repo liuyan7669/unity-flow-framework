@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.3] - 2026-11-12
+
+- 隐藏 FlowManager Inspector 的 Script 引用行，保留运行状态提示和实时调试信息。
+- 编辑器实现保持包内独立，不引入 UI Framework 依赖。
+
 ## [1.0.2] - 2026-11-08
 
 - 统一 Cowart 包图标：重新设计为按功能类别配色的圆角图标（状态节点 + 有向切换），同步更新 `Icon.png` 与 `Icon@2x.png`。

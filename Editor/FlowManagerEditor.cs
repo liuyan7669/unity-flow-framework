@@ -22,7 +22,9 @@ namespace Cowart.FlowFramework.Editor
 
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
+            serializedObject.Update();
+            DrawPropertiesExcluding(serializedObject, "m_Script");
+            serializedObject.ApplyModifiedProperties();
             EditorGUILayout.Space();
 
             if (!EditorApplication.isPlaying)
