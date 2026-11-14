@@ -1,4 +1,5 @@
 using UnityEditor;
+using Cowart.InspectorGroups.Editor;
 using UnityEngine;
 
 namespace Cowart.FlowFramework.Editor
@@ -8,47 +9,39 @@ namespace Cowart.FlowFramework.Editor
     /// 调试界面仅存在于 Editor 程序集，不会进入运行时构建。
     /// </summary>
     [CustomEditor(typeof(FlowManager))]
-    public class FlowManagerEditor : UnityEditor.Editor
+    public class FlowManagerEditor : InspectorGroupsEditor<FlowManager>
     {
         void OnEnable()
         {
             EditorApplication.update += RefreshWhilePlaying;
         }
 
-        void OnDisable()
+        protected override void OnDisable()
         {
             EditorApplication.update -= RefreshWhilePlaying;
+            base.OnDisable();
         }
 
-        public override void OnInspectorGUI()
+        protected override void BuildInspector(InspectorContent content)
         {
-            serializedObject.Update();
-            DrawPropertiesExcluding(serializedObject, "m_Script");
-            serializedObject.ApplyModifiedProperties();
-            EditorGUILayout.Space();
-
-            if (!EditorApplication.isPlaying)
+            content.Group("FlowState", "当前步骤（实时）", status =>
             {
-                EditorGUILayout.HelpBox(
-                    "进入 Play Mode 后可查看当前步骤的实时运行信息。",
-                    MessageType.Info);
-                return;
-            }
-
-            FlowManager manager = (FlowManager)target;
-            if (!manager.isActiveAndEnabled)
-            {
-                EditorGUILayout.HelpBox(
-                    "当前 FlowManager 未启用，无法显示实时运行信息。",
-                    MessageType.Warning);
-                return;
-            }
-
-            FlowContext context = FlowManager.FlowContext;
-            if (context != null)
-            {
-                FlowDebugWindow.DrawCurrentState(context);
-            }
+                if (!EditorApplication.isPlaying)
+                {
+                    status.Message("进入 Play Mode 后可查看当前步骤的实时运行信息。");
+                    return;
+                }
+                var manager = (FlowManager)target;
+                if (!manager.isActiveAndEnabled)
+                {
+                    status.Message("当前 FlowManager 未启用，无法显示实时运行信息。", MessageType.Warning);
+                    return;
+                }
+                var context = FlowManager.FlowContext;
+                if (context != null)
+                    foreach (var value in FlowDebugWindow.GetCurrentStateValues(context))
+                        status.Value(value.Key, value.Value);
+            }, style: Cowart.InspectorGroups.InspectorGroupStyle.Framework);
         }
 
         private void RefreshWhilePlaying()

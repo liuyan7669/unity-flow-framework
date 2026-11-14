@@ -10,6 +10,7 @@ namespace Cowart.FlowFramework
     /// </summary>
     [DefaultExecutionOrder(-1000)]
     [DisallowMultipleComponent]
+    [Cowart.InspectorGroups.HideScript]
     public class FlowManager : MonoBehaviour
     {
         private static FlowManager instance;

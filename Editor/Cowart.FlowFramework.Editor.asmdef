@@ -2,7 +2,9 @@
   "name": "Cowart.FlowFramework.Editor",
   "rootNamespace": "Cowart.FlowFramework.Editor",
   "references": [
-    "Cowart.FlowFramework"
+    "Cowart.FlowFramework",
+    "Cowart.InspectorGroups.Editor",
+    "Cowart.InspectorGroups"
   ],
   "includePlatforms": [
     "Editor"

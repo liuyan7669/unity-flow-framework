@@ -1,6 +1,6 @@
 {
   "name": "com.cowart.flow-framework",
-  "version": "1.0.3",
+  "version": "3.1.0",
   "displayName": "Flow Framework",
   "description": "提供基于状态模式的轻量同步流程管理、状态生命周期、共享上下文、运行记录、有效用时统计、快照导出和编辑器调试窗口。",
   "unity": "2021.3",
@@ -25,5 +25,8 @@
       "description": "通过可交互的五步仿真实验流程演示状态切换、结果记录、计时暂停、最后状态结束和快照导出。",
       "path": "Samples~/Flow Framework"
     }
-  ]
+  ],
+  "dependencies": {
+    "com.cowart.inspector-groups": "3.1.0"
+  }
 }

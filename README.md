@@ -34,12 +34,12 @@ com.cowart.flow-framework
 ### 通过 Git URL 安装
 
 ```text
-https://github.com/liuyan7669/unity-flow-framework.git#1.0.3
+https://github.com/liuyan7669/unity-flow-framework.git#3.1.0
 ```
 
 ## 快速开始
 
-在场景中创建一个 GameObject 并挂载 `FlowManager`。框架会在 `Awake` 中初始化，并先进入不计入业务历史的 `NullState`。
+通过 Hierarchy 右键菜单 `Cowart > 框架 > 创建 Flow 系统` 创建已挂载 `FlowManager` 的场景根物体（支持撤销，场景已有 FlowManager 时禁用）。也可以手动创建 GameObject 并挂载 `FlowManager`。框架会在 `Awake` 中初始化，并先进入不计入业务历史的 `NullState`。
 
 ```csharp
 using Cowart.FlowFramework;
@@ -167,7 +167,7 @@ string json = snapshot.ToJson();
 在 Unity 菜单中选择：
 
 ```text
-Cowart > 项目开发工具 > Flow Framework 调试
+Cowart > 调试 > Flow 系统调试
 ```
 
 进入 Play Mode 后可实时查看当前状态、完整状态类名、上一状态、计时状态、实际/有效用时以及已经结束的运行记录。FlowManager 的 Inspector 也会同步显示当前步骤的实时信息。两处界面均为只读，不会触发状态切换。
@@ -187,3 +187,7 @@ Cowart > 项目开发工具 > Flow Framework 调试
 ## 许可证
 
 本包使用 MIT License，详情参见 [LICENSE.md](LICENSE.md)。
+
+## Inspector 统一依赖
+
+本包声明依赖 `com.cowart.inspector-groups` `3.1.0`，Inspector 样式统一由该基础包提供。安装前须配置 OpenUPM scoped registry（`https://package.openupm.com`，scope `com.cowart`）；UPM 会根据 dependencies 连带解析 Inspector Groups。使用未发布源码时，请同时使用本地 Inspector Groups 3.1.0。业务包之间不互相依赖，Samples 的可选组合不受此限制。

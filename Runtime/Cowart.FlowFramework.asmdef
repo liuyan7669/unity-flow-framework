@@ -1,4 +1,7 @@
 {
   "name": "Cowart.FlowFramework",
-  "rootNamespace": "Cowart.FlowFramework"
+  "rootNamespace": "Cowart.FlowFramework",
+  "references": [
+    "Cowart.InspectorGroups"
+  ]
 }

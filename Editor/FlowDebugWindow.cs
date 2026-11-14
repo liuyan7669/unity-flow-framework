@@ -15,7 +15,7 @@ namespace Cowart.FlowFramework.Editor
         /// <summary>
         /// 打开 Flow Framework 运行调试窗口。
         /// </summary>
-        [MenuItem("Cowart/项目开发工具/Flow Framework 调试")]
+        [MenuItem("Cowart/调试/Flow 系统调试")]
         public static void Open()
         {
             GetWindow<FlowDebugWindow>("Flow Debugger");
@@ -72,22 +72,33 @@ namespace Cowart.FlowFramework.Editor
 
         /// <summary>
         /// 绘制当前步骤的实时运行信息。
-        /// FlowManager Inspector 复用此方法，确保两处调试信息保持一致。
+        /// 此方法仅用于调试窗口；Inspector 通过 GetCurrentStateValues 复用数据。
         /// </summary>
         internal static void DrawCurrentState(FlowContext context)
         {
             EditorGUILayout.LabelField("当前步骤（实时）", EditorStyles.boldLabel);
-
             using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox))
+                DrawCurrentStateValues(context);
+        }
+
+        /// <summary>为窗口与 Inspector 提供相同的状态数据。</summary>
+        internal static System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> GetCurrentStateValues(FlowContext context)
+        {
+            return new[]
             {
-                DrawValue("当前状态", GetStateName(context.CurrentState));
-                DrawValue("状态类", GetStateTypeName(context.CurrentState));
-                DrawValue("上一状态", GetStateName(context.PreviousState));
-                DrawValue("计时状态", context.IsTimingPaused ? "已暂停" : "运行中");
-                DrawValue("开始时间", FormatTime(context.CurrentStateStartTime));
-                DrawValue("实际用时", FormatDuration(context.CurrentStateElapsedTime));
-                DrawValue("有效用时", FormatDuration(context.CurrentStateActiveElapsedTime));
-            }
+                new System.Collections.Generic.KeyValuePair<string, string>("当前状态", GetStateName(context.CurrentState)),
+                new System.Collections.Generic.KeyValuePair<string, string>("状态类", GetStateTypeName(context.CurrentState)),
+                new System.Collections.Generic.KeyValuePair<string, string>("上一状态", GetStateName(context.PreviousState)),
+                new System.Collections.Generic.KeyValuePair<string, string>("计时状态", context.IsTimingPaused ? "已暂停" : "运行中"),
+                new System.Collections.Generic.KeyValuePair<string, string>("开始时间", FormatTime(context.CurrentStateStartTime)),
+                new System.Collections.Generic.KeyValuePair<string, string>("实际用时", FormatDuration(context.CurrentStateElapsedTime)),
+                new System.Collections.Generic.KeyValuePair<string, string>("有效用时", FormatDuration(context.CurrentStateActiveElapsedTime))
+            };
+        }
+
+        private static void DrawCurrentStateValues(FlowContext context)
+        {
+            foreach (var value in GetCurrentStateValues(context)) DrawValue(value.Key, value.Value);
         }
 
         private void DrawHistory(FlowContext context)
